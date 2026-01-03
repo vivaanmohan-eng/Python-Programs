@@ -72,3 +72,5 @@ def game_over():
     sc.update()
     time.sleep(4)
     sc.bye()
+
+#Key bindings
