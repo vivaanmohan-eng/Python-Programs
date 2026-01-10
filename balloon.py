@@ -1,7 +1,8 @@
 import turtle as turt
 import time
 import random as ran
-sc = turt.Screen("white")
+sc = turt.Screen()
+sc.bgcolor("White")
 sc.setup(800,800)
 sc.tracer(0)
 
@@ -10,7 +11,7 @@ p = turt.Turtle()
 p.shape("triangle")
 p.color("red")
 p.up()
-p.goto(0,-400)
+p.goto(0,-250)
 p.setheading(90)
 
 #Score
@@ -18,7 +19,7 @@ score = 0
 sco_dis = turt.Turtle()
 sco_dis.hideturtle()
 sco_dis.up()
-sco_dis.goto(-400,400)
+sco_dis.goto(-300,300)
 sco_dis.color("blue")
 sco_dis.write(f"Score: {score}", font=("Arial", 20, "italic"))
 
@@ -74,3 +75,30 @@ def game_over():
     sc.bye()
 
 #Key bindings
+sc.listen()
+sc.onkey(move_left, 'a')
+sc.onkey(move_right, 'd')
+
+#Gameplay
+while running:
+    sc.update()
+    current_time = time.time()
+    if current_time - last_spawn_time > spawn_int:
+        spawn_balloon()
+        last_spawn_time = current_time
+    for balloon in balloons[:]:
+        balloon.sety(balloon.ycor() - balloon.speed)
+        if balloon.ycor() < -399:
+            balloons.remove(balloon)
+            balloon.hideturtle()
+        #Check for collision
+        if p.distance(balloon) < 15:
+            if balloon.is_bomb == True:
+                game_over()
+            else:
+                score_upd(5)
+            balloons.remove(balloon)
+            balloon.hideturtle()
+    game_speed = max(0.005, game_speed - dif_inc)
+    spawn_int = max(0.5, spawn_int - 0.0005)
+    time.sleep(game_speed)
