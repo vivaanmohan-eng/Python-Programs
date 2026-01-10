@@ -6,6 +6,17 @@ sc.bgcolor("White")
 sc.setup(800,800)
 sc.tracer(0)
 
+#Timer
+
+counter = 60
+start_time = time.time()
+timer = turt.Turtle()
+timer.up()
+timer.goto(200, 350)
+timer.color("Black")
+timer.write(f"Time left: {counter}", font=("Arial", 20, "italic"))
+timer.hideturtle()
+
 #Player Setup
 p = turt.Turtle()
 p.shape("triangle")
@@ -74,6 +85,12 @@ def game_over():
     time.sleep(4)
     sc.bye()
 
+def timer_upd():
+    remaining_time = max(0,int(counter - (time.time() - start_time)))
+    timer.clear()
+    timer.write(f"Time left: {remaining_time}", font=("Arial", 20, "italic"))
+    if remaining_time <= 0:
+        game_over()
 #Key bindings
 sc.listen()
 sc.onkey(move_left, 'a')
@@ -101,4 +118,7 @@ while running:
             balloon.hideturtle()
     game_speed = max(0.005, game_speed - dif_inc)
     spawn_int = max(0.5, spawn_int - 0.0005)
+    timer_upd()
     time.sleep(game_speed)
+
+
