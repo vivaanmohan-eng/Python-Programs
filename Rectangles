@@ -1,0 +1,20 @@
+import pgzrun
+WIDTH = 300
+HEIGHT = 500
+TITLE = "Rectangles!"
+def draw():
+    r = 255
+    g = 150
+    b = 0
+    width = WIDTH - 100
+    height = HEIGHT - 100
+    for i in range(20):
+        rect = Rect((0,0),(width,height))
+        rect.center = (150,250)
+        screen.draw.rect(rect , (r,g,b))
+        b += 10
+        r -= 10
+        g += 5
+        width -=10
+        height -=10
+pgzrun.go()
