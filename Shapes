@@ -1,0 +1,21 @@
+import pgzrun
+import random as ran
+WIDTH = 800
+HEIGHT = 1000
+TITLE = "SHAPES!"
+def draw():
+    r = 255
+    g = 255
+    b = 255
+    width = (WIDTH - 400) 
+    height = (HEIGHT - 400)
+    radius = 100
+    #Rect((x,y),(w,h))
+    rect1 = Rect((200,200),(width,height))
+    rect2 = Rect((400,800),(width,height))
+    rect3 = Rect((300,500),(width,height))
+    screen.draw.rect(rect1 , (r,g,b))
+    screen.draw.filled_rect(rect2 , (ran.randint(0,255),g,b))
+    screen.draw.textbox("I am a text box!" , rect3 )
+
+pgzrun.go()
