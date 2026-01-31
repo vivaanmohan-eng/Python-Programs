@@ -58,5 +58,5 @@ def play_game():
             print_board(board)
             print("It's a draw!")
             break
-        current_player == "O" if current_player == "X" else "X"
+        current_player = "O" if current_player == "X" else "X"
 play_game()
