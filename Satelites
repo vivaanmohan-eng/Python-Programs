@@ -1,0 +1,60 @@
+import pgzrun
+import random as ran
+from time import time
+HEIGHT = 512
+WIDTH = 750
+TITLE = "Connect the satelites"
+satelites = []
+lines = []
+next_satelite = 0
+start_time = 0
+end_time = 0
+total_time = 0
+no_of_satelites = 10
+
+def create_satelite():
+    global start_time
+    for count in range(0,no_of_satelites):
+        satelite = Actor("satelite")
+        satelite.pos = (ran.randint(50,WIDTH - 50) , ran.randint(50,HEIGHT - 50))
+        satelites.append(satelite)
+    start_time = time()
+
+def draw():
+    global total_time
+    screen.blit("bg" , (0,0))
+    num = 1
+    for satelite in satelites:
+        screen.draw.text(str(num),(satelite.pos[0],satelite.pos[1] + 25))
+        satelite.draw()
+        num += 1
+    for line in lines:
+        screen.draw.line(line[0] , line[1] , (255,255,255))
+    if next_satelite < no_of_satelites:
+        total_time = time() - start_time
+        screen.draw.text(str(round(total_time , 2)) , (50,50) , fontsize = 20)
+    else:
+        screen.draw.text(str(round(total_time , 2)) , (50,50) , fontsize = 20)
+
+
+def update():
+    pass
+
+def on_mouse_down(pos):
+    global next_satelite
+    global lines
+    if next_satelite < no_of_satelites:
+        if satelites[next_satelite].collidepoint(pos):
+            if next_satelite:
+                lines.append((satelites[next_satelite-1].pos, satelites[next_satelite].pos))
+            next_satelite += 1
+        else:
+            lines = []
+            print("Try again!")
+            next_satelite = 0
+
+create_satelite()
+
+
+
+pgzrun.go()
