@@ -5,15 +5,21 @@ HEIGHT = 500
 TITLE = "Galaga"
 BLUE = (0,0,255)
 ship = Actor("user")
-bug = Actor("enemy")
+enemy = Actor("bug")
 ship.pos = (WIDTH//2 , HEIGHT - 50)
 speed = 15
 bullets = []
 enemies = []
-enemies.append(bug)
-enemies[-1].x = 100
-enemies[-1].y = -50
+
+
 score = 0
+direction = 1
+
+for i in range(8):
+    enemies.append(Actor("bug"))
+    enemies[-1].x = 100 +70 * i 
+    enemies[-1].y = -25
+
 
 def display_score():
     screen.draw.text(str(score) , (50 , 50) , fontsize = 25)
@@ -28,33 +34,49 @@ def on_key_down(key):
 
 def update():
     global score
+    global direction
+    moveDown = False
+
     if keyboard.left:
         ship.x -= 10
         if ship.x <= 10:
             ship.x = 10
         
-    if keyboard.right:
+    elif keyboard.right:
         ship.x += 10
         if ship.x >= WIDTH - 10:
             ship.x = WIDTH - 10
-    
+
     for bullet in bullets:
-        if bullet.y <= 0:
-            bullets.remove(bullet)
-        else:
-            bullet.y -= 5
-        
+            if bullet.y <= 0:
+                bullets.remove(bullet)
+            else:
+                bullet.y -= 5
+
     for enemy in enemies:
-        enemy.y += 5
+        enemy.y += 2
         if enemy.y >= HEIGHT:
-            enemy.y= -100
-            enemy.x = ran.randint(10,WIDTH - 10)
+            enemies.remove(enemy)
+        else:
+            enemy.y += 2
     
-    for bullet in bullets:
-        if enemy.colliderect(bullet):
-            score += 10
-            bullets.remove(bullet)
-            enemies.remove(enemy )
+    if(len(enemies) > 0) and ( enemies[0].x < 20 or enemies[-1].x > WIDTH - 20):
+        moveDown = True
+        direction *= -1
+
+    for enemy in enemies:
+        enemy.x += 5*direction
+        if moveDown == True:
+            enemy.y += 5
+            #if enemy.y >= HEIGHT:
+                #enemy.y= -100
+                #enemy.x = ran.randint(10,WIDTH - 10)
+        
+        for bullet in bullets:
+            if enemy.colliderect(bullet):
+                score += 10
+                bullets.remove(bullet)
+                enemies.remove(enemy)
         
         
 
@@ -67,6 +89,7 @@ def draw():
 
     for enemy in enemies:
         enemy.draw()
+
     
     ship.draw()
     display_score()
