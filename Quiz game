@@ -2,15 +2,94 @@ import pgzrun
 from pygame import Rect
 TITLE = "Quiz Game"
 WIDTH = 800
-HEIGHT = 800
+HEIGHT = 750
 
-marquee_box = Rect(0,0 , 800,60)
+marquee_box = Rect(0,0 , 850,60)
+question_box = Rect(20,80 , 500,140)
+timer_box = Rect(600 , 80 , 140,140)
+skip_box = Rect(600,260 , 140,450)
+ans_box1 = Rect(20,260 , 230,110)
+ans_box2 = Rect(275,260 , 230,110)
+ans_box3 = Rect(20,395 , 230,110)
+ans_box4 = Rect(275,395 , 230,110)
+ans_boxes = [ans_box1,ans_box2,ans_box3,ans_box4]
 
+
+score = 0
+time_left = 10
+marquee_msg = ""
+is_game_over = False
+
+questions_file = 'Quiz_master\questions.txt'
+questions = []
+question_count = 0
+question_index = 0
 
 
 def draw():
     screen.fill("black")
-    screen.draw.filled_rect(marquee_box,"white")
+    screen.draw.filled_rect(marquee_box,"black")
+    screen.draw.filled_rect(question_box,"red")
+    screen.draw.filled_rect(timer_box,"red")
+    screen.draw.filled_rect(skip_box,"blue")
+    for i in ans_boxes:
+        screen.draw.filled_rect(i,"yellow")
+    marquee_msg = 'Welcome to the Quiz Master!'
+    marquee_msg += f'Q: {question_index} of {question_count}'
+    screen.draw.textbox(marquee_msg , marquee_box , color = "white")
+
+    screen.draw.textbox(str(time_left) , timer_box , color = "white", shadow = (0.75,0.75) , scolor = 'grey' )
+    screen.draw.textbox("SKIP" , skip_box , color = 'black' )
+    
+    screen.draw.textbox(question[0].strip(), question_box , color = 'white')
+    
+    index = 1
+    for i in ans_boxes:
+        screen.draw.textbox(question[index].strip(),i,color = 'black')
+        index += 1
+
+def update():
+    move_marquee()
+
+
+def move_marquee():
+    marquee_box.x -= 2
+    if marquee_box.right < 0:
+        marquee_box.left = WIDTH
+
+
+def read_question_file():
+    global questions
+    global question_count
+    question_file = open(questions_file, "r")
+    for question in question_file:
+        questions.append(question)
+        question_count += 1
+    question_file.close()
+
+def read_next_question():
+    pass
+
+def on_mouse_down(pos):
+    pass
+
+def correct_awnser():
+    pass
+
+def skip_question():
+    pass
+
+def game_over():
+    pass
+
+def update_time_left():
+    pass
+
+
+
+read_question_file()
+question = read_next_question()
+clock.schedule_interval(update_time_left , 1)
 
 
 pgzrun.go()
