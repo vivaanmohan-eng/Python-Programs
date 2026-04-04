@@ -2,16 +2,17 @@ import pgzrun
 from pygame import Rect
 TITLE = "Quiz Game"
 WIDTH = 800
-HEIGHT = 750
+HEIGHT = 700
 
 marquee_box = Rect(0,0 , 850,60)
 question_box = Rect(20,80 , 500,140)
 timer_box = Rect(600 , 80 , 140,140)
 skip_box = Rect(600,260 , 140,450)
-ans_box1 = Rect(20,260 , 230,110)
-ans_box2 = Rect(275,260 , 230,110)
-ans_box3 = Rect(20,395 , 230,110)
-ans_box4 = Rect(275,395 , 230,110)
+
+ans_box1 = Rect(20,260 , 230,150)
+ans_box2 = Rect(275,260 , 230,150)
+ans_box3 = Rect(20,450 , 230,150)
+ans_box4 = Rect(275,450 , 230,150)
 ans_boxes = [ans_box1,ans_box2,ans_box3,ans_box4]
 
 
@@ -20,7 +21,7 @@ time_left = 10
 marquee_msg = ""
 is_game_over = False
 
-questions_file = 'Quiz_master\questions.txt'
+questions_file = 'Quiz_master/questions.txt'
 questions = []
 question_count = 0
 question_index = 0
@@ -68,22 +69,66 @@ def read_question_file():
     question_file.close()
 
 def read_next_question():
-    pass
+    global question_index
+    question_index += 1
+    return questions.pop(0).split("|")
+
 
 def on_mouse_down(pos):
-    pass
+    index = 1
+    for box in ans_boxes:
+        if box.collidepoint(pos):
+            if index == int(question[5]):
+                correct_awnser()
+            else:
+                game_over()
+        index += 1
+    if skip_box.collidepoint(pos):
+        skip_question()
+    
 
 def correct_awnser():
-    pass
+    global question
+    global time_left
+    global questions
+    global score
+    score += 1
+    if questions:
+        question = read_next_question()
+        time_left = 10
+        
+    else:
+        game_over()
+    
+
 
 def skip_question():
-    pass
+    global question
+    global time_left
+    if questions and not is_game_over:
+        question = read_next_question()
+        time_left = 10
+    else:
+        game_over()
+    
 
 def game_over():
-    pass
+    global question
+    global time_left
+    global is_game_over
+    msg = f"Game Over! \n You got {score} questions correct!"
+    question = [msg, "-","-","-","-",5]
+    time_left = 0
+    is_game_over = True
+
 
 def update_time_left():
-    pass
+    global time_left
+    if time_left:
+        time_left -= 1
+    else:
+        game_over()
+    
 
 
 
