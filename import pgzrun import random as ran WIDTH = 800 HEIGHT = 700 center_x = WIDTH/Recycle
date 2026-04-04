@@ -1,0 +1,28 @@
+import pgzrun
+import random as ran
+WIDTH = 800
+HEIGHT = 700
+center_x = WIDTH/2
+center_y = HEIGHT/2
+center = (center_x,center_y)
+find_level = 10
+start_speed = 15
+ITEMS = ["battery" , "bottle" , "chips" , "plastic" , "block"]
+items_list = []
+animation = []
+
+game_over = False
+game_complete = False
+current_level = 1
+
+def draw():
+    global items_list
+    global current_level, game_complete, game_over
+    screen.clear()
+    screen.blit("bg",(0,0))
+    if game_over:
+        display_msg("")
+
+
+
+pgzrun.go()
