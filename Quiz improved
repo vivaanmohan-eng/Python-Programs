@@ -1,0 +1,156 @@
+import pgzrun
+import random
+from pygame import Rect
+
+TITLE = "Quiz Game"
+WIDTH = 800
+HEIGHT = 700
+
+marquee_box = Rect(0, 0, 850, 60)
+question_box = Rect(20, 80, 500, 140)
+timer_box = Rect(600, 80, 140, 140)
+skip_box = Rect(600, 260, 140, 450)
+
+ans_box1 = Rect(20, 260, 230, 150)
+ans_box2 = Rect(275, 260, 230, 150)
+ans_box3 = Rect(20, 450, 230, 150)
+ans_box4 = Rect(275, 450, 230, 150)
+ans_boxes = [ans_box1, ans_box2, ans_box3, ans_box4]
+
+score = 0
+time_left = 10
+lives = 3
+is_game_over = False
+
+questions_file = 'Quiz_master/questions1.txt'
+questions = []
+question_count = 0
+question_index = 0
+
+def draw():
+    screen.fill("black")
+
+    screen.draw.filled_rect(marquee_box, "black")
+    screen.draw.filled_rect(question_box, "red")
+    screen.draw.filled_rect(timer_box, "red")
+    screen.draw.filled_rect(skip_box, "blue")
+
+    for i in ans_boxes:
+        screen.draw.filled_rect(i, "yellow")
+
+    marquee_msg = f'Welcome to Quiz Master!  Q: {question_index} of {question_count}'
+    screen.draw.textbox(marquee_msg, marquee_box, color="white")
+
+    screen.draw.textbox(str(time_left), timer_box, color="white",
+                        shadow=(0.75, 0.75), scolor='grey')
+
+    screen.draw.textbox("SKIP", skip_box, color='black')
+
+    screen.draw.text(f"Score: {score}", (20, 20), color="white")
+    screen.draw.text(f"Lives: {lives}", (650, 20), color="white")
+
+    screen.draw.textbox(question[0], question_box, color='white')
+
+    index = 1
+    for i in ans_boxes:
+        screen.draw.textbox(question[index], i, color='black')
+        index += 1
+
+def update():
+    move_marquee()
+
+def move_marquee():
+    marquee_box.x -= 2
+    if marquee_box.right < 0:
+        marquee_box.left = WIDTH
+
+def read_question_file():
+    global questions, question_count
+
+    with open(questions_file, "r") as f:
+        for line in f:
+            questions.append(line.strip())
+
+    random.shuffle(questions)
+    question_count = len(questions)
+
+def read_next_question():
+    global question_index
+    question_index += 1
+    return questions.pop(0).split("|")
+
+def on_mouse_down(pos):
+    index = 1
+
+    for box in ans_boxes:
+        if box.collidepoint(pos):
+            if index == int(question[5]):
+                correct_answer()
+            else:
+                lose_life()
+        index += 1
+
+    if skip_box.collidepoint(pos):
+        skip_question()
+
+def correct_answer():
+    global question, time_left, score
+
+    score += 1
+
+    if questions:
+        question = read_next_question()
+        time_left = 10
+    else:
+        game_over()
+
+def lose_life():
+    global lives, question, time_left, is_game_over
+
+    if is_game_over:
+        return
+
+    lives -= 1
+
+    if lives > 0:
+        if questions:
+            question = read_next_question()
+            time_left = 10
+        else:
+            game_over()
+    else:
+        game_over()
+
+def skip_question():
+    global question, time_left
+
+    if questions and not is_game_over:
+        question = read_next_question()
+        time_left = 10
+    else:
+        game_over()
+
+def game_over():
+    global question, time_left, is_game_over
+
+    msg = f"Game Over!\nScore: {score}"
+    question = [msg, "-", "-", "-", "-", "5"]
+    time_left = 0
+    is_game_over = True
+
+def update_time_left():
+    global time_left
+
+    if is_game_over:
+        return
+
+    if time_left > 0:
+        time_left -= 1
+    else:
+        lose_life()
+
+read_question_file()
+question = read_next_question()
+clock.schedule_interval(update_time_left, 1)
+
+pgzrun.go()
