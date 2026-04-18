@@ -1,0 +1,34 @@
+import pygame
+HEIGHT = 550
+WIDTH = 550
+
+screen = pygame.display.set_mode((WIDTH,HEIGHT))
+Blue = (0,0,255)
+Red = (255,0,0)
+Green = (0,255,0)
+
+class circ:
+    def __init__(self,color,position, radius):
+        self.circle_surface = screen
+        self.circle_color = color
+        self.circle_radius = radius
+        self.circle_position = position
+    
+    def draw(self):
+        self.drawcircle = pygame.draw.circle(self.circle_surface, self.circle_color,
+                                              self.circle_position, self.circle_radius)
+        
+greencirc = circ(Green,(55,55), 50)
+redcirc = circ(Red,(175,175) , 75)
+bluecirc = circ(Blue,(350,350) , 100)
+
+running = True
+
+while running:
+    greencirc.draw()
+    redcirc.draw()
+    bluecirc.draw()
+    pygame.display.update()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
