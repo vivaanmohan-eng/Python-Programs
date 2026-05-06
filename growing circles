@@ -1,0 +1,39 @@
+import pygame
+screen = pygame.display.set_mode((800,800))
+screen.fill((255,255,255))
+pygame.display.update()
+class circle:
+  def __init__(self,radius,color,position,width):
+    self.radius = radius
+    self.color = color
+    self.position = position
+    self.width = width
+    self.surface = screen
+  
+  def draw(self):
+    self.draw_circle = pygame.draw.circle(self.radius, self.color, self.position
+                                          self.width, self.surface)
+  
+  def grow(self,radius):
+    self.radius += radius
+    self.draw_circle = pygame.draw.circle(self.radius, self.color, self.position
+                                          self.width, self.surface)
+    
+c1 = circle(20,(0,0,0), (400,400), 5)#For width anything other than zero causes hollow
+c2 = circle(10,(250,155,0), (50,50),0 )
+
+running = True
+while running:
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      pygame.quit()
+    if event.type == pygame.MOUSEBUTTONDOWN:
+      screen.fill((255,255,0))
+      c1.draw()
+      c2.draw()
+      pygame.display.update()
+    if event.type == pygame.MOUSEBUTTONUP:
+      c1.grow(5)
+      c2.grow(2)
+      pygame.display.update()
+    
