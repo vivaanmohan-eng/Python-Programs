@@ -1,0 +1,52 @@
+import pygame
+screen = pygame.display.set_mode((800,500))
+title = pygame.display.set_caption("painting software")
+screen.fill((255,0,255))
+Red = (100)
+Green = (160)
+Blue = (230)
+pygame.display.update()
+
+
+class mycircle():
+    def __init__(self,color,pos,radius,width = 0):
+        self.color = color
+        self.pos = pos
+        self.radius = radius
+        self.width = width
+        self.screen = screen
+    
+    def draw(self):
+        pygame.draw.circle(self.screen,self.color,
+        self.pos, self.radius, self.width)
+    
+    def grow(self,r):
+        self.radius += r
+        pygame.draw.circle(self.screen,self.color,
+        self.pos, self.radius, self.width)
+position = (300,300)
+red_circle = mycircle((Red,0,0), position, 25,0)
+yel_circle = mycircle((Red,Green,0), position, 25,0)
+green_circle = mycircle((0,Green,0), position, 25,0)
+running = True
+
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            red_circle.draw()
+            yel_circle.draw()
+            green_circle.draw()
+            pygame.display.update()
+        if event.type == pygame.MOUSEBUTTONUP:
+            red_circle.grow(25)
+            yel_circle.grow(15)
+            green_circle.grow(5) 
+            pygame.display.update()
+        if event.type == pygame.MOUSEMOTION:
+            position = pygame.mouse.get_pos()
+            blue_circle = mycircle((0,0,Blue),position,15,5)
+            blue_circle.draw()
+            pygame.display.update()
+            
