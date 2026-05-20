@@ -1,0 +1,28 @@
+import pygame
+screen = pygame.display.set_mode((800,500))
+title = pygame.display.set_caption("painting software")
+screen.fill((255,0,255))
+Red = (100)
+Green = (160)
+Blue = (230)
+pygame.display.update()
+
+running = True
+
+while running:
+    event = pygame.event.poll()
+
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        on = pygame.image.load("lightbulb/on.jpg")
+        resize = pygame.transform.scale(on,(100,100))
+        screen.blit(resize,(300,300))
+        pygame.display.update()
+
+    elif event.type == pygame.MOUSEBUTTONUP:
+        off = pygame.image.load("lightbulb/off.jpg")
+        resize = pygame.transform.scale(off,(100,100))
+        screen.blit(resize,(300,300))
+        pygame.display.update()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
