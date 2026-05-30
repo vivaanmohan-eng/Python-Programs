@@ -1,0 +1,50 @@
+import pygame
+import time
+pygame.init()
+WIDTH = 800
+HEIGHT = 500
+screen = pygame.display.set_mode((WIDTH,HEIGHT))
+title = pygame.display.set_caption("Birthday Card")
+screen.fill((255,0,255))
+
+running = True
+while running:
+    image = pygame.image.load("birthday/border.jpg")
+    image1 = pygame.transform.scale(image,(WIDTH,HEIGHT))
+    font = pygame.font.SysFont("Times New Roman",70)
+    text = font.render("HAPPY" , True , (0,0,0) , "blue")
+    text2 = font.render("BIRTHDAY" , True , (255,255,0) , "red")
+    screen.blit(image1,(0,0))
+    screen.blit(text,(300,200))
+    screen.blit(text2,(250,325))
+    pygame.display.update()
+    time.sleep(2)
+
+    img = pygame.image.load("birthday/cake.jpg")
+    img1 = pygame.transform.scale(img,(WIDTH,HEIGHT))
+    font2 = pygame.font.SysFont("Arial" , 70)
+    txt = font.render("BEST" , True , (0,0,0) , "red")
+    txt2 = font.render("OF WISHES" , True , "yellow" , "blue")
+    screen.blit(img1,(0,0))
+    screen.blit(txt, (350,50))
+    screen.blit(txt2,(300,400))
+    pygame.display.update()
+    time.sleep(3)
+
+    imag = pygame.image.load("birthday/confetti.jpg")
+    imag1 = pygame.transform.scale(imag,(WIDTH,HEIGHT))
+    font2 = pygame.font.SysFont("Arial" , 70)
+    txt_ = font.render("BIRTHDAY" , True , (0,0,0) , "red")
+    txt2_ = font.render("WISHES!" , True , "yellow" , "blue")
+    screen.blit(imag1,(0,0))
+    screen.blit(txt_, (50,50))
+    screen.blit(txt2_,(50,400))
+    pygame.display.update()
+    time.sleep(3)
+
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+
+    pygame.display.update()
