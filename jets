@@ -1,0 +1,19 @@
+import pygame
+from pygame.locals import*
+from time import*
+screen = pygame.display.set_mode((800,500))
+title = pygame.display.set_caption("Rocket")
+
+player_x = 350
+player_y = 250
+keys = [False,False,False,False]
+player = pygame.image.load("Jets/rocket.png")
+bg = pygame.image.load("Jets/sky.png")
+while player_y < 500:
+    screen.blit(bg,(0,0))
+    screen.blit(player,(player_x,player_y))
+    
+
+
+screen.fill((255,0,255))
+pygame.display.update()
