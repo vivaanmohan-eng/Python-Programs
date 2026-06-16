@@ -7,11 +7,37 @@ title = pygame.display.set_caption("Rocket")
 player_x = 350
 player_y = 250
 keys = [False,False,False,False]
-player = pygame.image.load("Jets/rocket.png")
-bg = pygame.image.load("Jets/sky.png")
+player = pygame.image.load("Rocket\jet.png")
+bg = pygame.image.load("Rocket\sky.png")
 while player_y < 500:
     screen.blit(bg,(0,0))
     screen.blit(player,(player_x,player_y))
+    pygame.display.flip()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == K_UP:
+                keys[0] = True
+            elif event.key == K_LEFT:
+                keys[1] = True
+            elif event.key == K_DOWN:
+                keys[2] = True
+            elif event.key == K_RIGHT:
+                keys[3] = True
+
+        if event.type == pygame.KEYUP:
+            if event.key == K_UP:
+                keys[0] = False
+            elif event.key == K_LEFT:
+                keys[1] = False
+            elif event.key == K_DOWN:
+                keys[2] = False
+            elif event.key == K_RIGHT:
+                keys[3] = False
+    
+    
+
     
 
 
