@@ -1,0 +1,61 @@
+import pygame
+from time import*
+pygame.font.init()
+pygame.mixer.init()
+
+WIDTH = 800
+HEIGHT = 500
+screen = pygame.display.set_mode((WIDTH,HEIGHT))
+title = pygame.display.set_caption("Space Fighting")
+WHITE = (255,255,255)
+RED = (255,0,0)
+YELLOW = (255,255,0)
+BLACK = (0,0,0)
+
+border = pygame.Rect(WIDTH/2-25,0,50,HEIGHT)
+
+boom = pygame.mixer.sound("Space_Fighting\Assets\\boom.mp3")
+pew = pygame.mixer.sound("Space_Fighting\Assets\pew.mp3")
+hp = pygame.font.SysFont("comicsans",50)
+winner_font = pygame.font.SysFont("comicsans",90)
+fps = 60
+
+vel = 5
+bullet_vel = 7
+max_bullets = 5
+spaceship_width = 50
+spaceship_height = 40
+
+yellow_hit = pygame.USEREVENT + 1
+red_hit = pygame.USEREVENT + 2
+yellow_ship = pygame.image.load("Space_Fighting\Assets\p2.png")
+red_ship = pygame.image.load("Space_Fighting\Assets\p1.png")
+
+red_spaceship = pygame.transform.rotate(pygame.transform.scale(red_ship,(spaceship_width,spaceship_height)),90)
+yellow_spaceship = pygame.transform.rotate(pygame.transform.scale(yellow_ship,(spaceship_width,spaceship_height)),270)
+
+space = pygame.transform.scale(pygame.image.load("Space_Fighting\Assets\\bg.png"),(WIDTH,HEIGHT))
+
+def draw_window(red,yellow,red_bullets,yellow_bullets,red_hp,yellow_hp):
+    screen.blit(space,(0,0))
+    pygame.draw.rect(screen,BLACK,border)
+
+    red_health_text = hp.render("HEALTH" + str(red_hp),1,WHITE)
+    yellow_health_text = hp.render("HEALTH" + str(yellow_hp),1,WHITE)
+
+    screen.blit(red_health_text,(WIDTH-red_health_text.get_width()-10,10))
+    screen.blit(yellow_health_text,(10,10))
+
+    for bullet in red_bullets:
+        pygame.draw.rect(screen,RED,bullet)
+
+    for bullet in yellow_bullets:
+        pygame.draw.rect(screen,YELLOW,bullet)
+    pygame.display.update()
+
+def yellow_handle_movement(key_pressed,yellow):
+    pass
+
+def red_handle_movement(key_pressed,red):
+    pass
+
