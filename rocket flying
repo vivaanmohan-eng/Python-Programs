@@ -1,0 +1,62 @@
+import pygame
+from pygame.locals import*
+from time import*
+screen = pygame.display.set_mode((800,500))
+title = pygame.display.set_caption("Rocket")
+
+player_x = 350
+player_y = 250
+keys = [False,False,False,False]
+player = pygame.image.load("Rocket\jet.png")
+bg = pygame.image.load("Rocket\sky.png")
+while player_y < 500:
+    screen.blit(bg,(0,0))
+    screen.blit(player,(player_x,player_y))
+    pygame.display.flip()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == K_UP:
+                keys[0] = True
+            elif event.key == K_LEFT:
+                keys[1] = True
+            elif event.key == K_DOWN:
+                keys[2] = True
+            elif event.key == K_RIGHT:
+                keys[3] = True
+
+        if event.type == pygame.KEYUP:
+            if event.key == K_UP:
+                keys[0] = False
+            elif event.key == K_LEFT:
+                keys[1] = False
+            elif event.key == K_DOWN:
+                keys[2] = False
+            elif event.key == K_RIGHT:
+                keys[3] = False
+    
+    #When up arrow is pressed
+    if keys[0]:
+        if player_y > 0:
+            player_y -= 20
+
+    elif keys[2]:
+        if player_y < 500:
+            player_y += 20
+            
+    if keys[1]:
+        if player_x > 0:
+            player_x -= 20
+            
+    elif keys[3]:
+        if player_x < 800:
+            player_x += 20
+    
+
+    
+    player_y += 5
+    sleep(0.05)
+
+print("Game Over")
+
