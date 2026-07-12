@@ -55,23 +55,23 @@ def draw_window(red,yellow,red_bullets,yellow_bullets,red_hp,yellow_hp):
 
 #Control yellow ship
 def yellow_handle_movement(key_pressed,yellow):
-    if key_pressed(pygame.key_a) and yellow.x > 0:
+    if key_pressed(pygame.K_a) and yellow.x > 0:
         yellow.x -= vel
-    if key_pressed(pygame.key_d) and yellow.x+yellow.width < border.x:
+    if key_pressed(pygame.K_d) and yellow.x+yellow.width < border.x:
         yellow.x += vel
-    if key_pressed(pygame.key_w) and yellow.y > 0:
+    if key_pressed(pygame.K_w) and yellow.y > 0:
         yellow.y -= vel
-    if key_pressed(pygame.key_s) and yellow.y+yellow.height < 500-15:
+    if key_pressed(pygame.K_s) and yellow.y+yellow.height < 500-15:
         yellow.y += vel
 
 def red_handle_movement(key_pressed,red):
-    if key_pressed(pygame.key_LEFT) and red.x > border.x+border.width:
+    if key_pressed(pygame.K_LEFT) and red.x > border.x+border.width:
         red.x -= vel
-    if key_pressed(pygame.key_RIGHT) and red.x+red.width < 800:
+    if key_pressed(pygame.K_RIGHT) and red.x+red.width < 800:
         red.x += vel
-    if key_pressed(pygame.key_UP) and red.y > 0:
+    if key_pressed(pygame.K_UP) and red.y > 0:
         red.y -= vel
-    if key_pressed(pygame.key_DOWN) and red.y+red.height < 500-15:
+    if key_pressed(pygame.K_DOWN) and red.y+red.height < 500-15:
         red.y += vel
 
 def handle_bullets(yellow_bullets,red_bullets,yellow,red):
