@@ -31,8 +31,8 @@ red_hit = pygame.USEREVENT + 2
 yellow_ship = pygame.image.load("Space_Fighting\Assets\p2.png")
 red_ship = pygame.image.load("Space_Fighting\Assets\p1.png")
 
-red_spaceship = pygame.transform.rotate(pygame.transform.scale(red_ship,(spaceship_width,spaceship_height)),90)
-yellow_spaceship = pygame.transform.rotate(pygame.transform.scale(yellow_ship,(spaceship_width,spaceship_height)),270)
+red_spaceship = pygame.transform.rotate(pygame.transform.scale(red_ship,(spaceship_width,spaceship_height)),270)
+yellow_spaceship = pygame.transform.rotate(pygame.transform.scale(yellow_ship,(spaceship_width,spaceship_height)),90)
 
 space = pygame.transform.scale(pygame.image.load("Space_Fighting\Assets\\bg.png"),(WIDTH,HEIGHT))
 
@@ -45,7 +45,8 @@ def draw_window(red,yellow,red_bullets,yellow_bullets,red_hp,yellow_hp):
 
     screen.blit(red_health_text,(WIDTH-red_health_text.get_width()-10,10))
     screen.blit(yellow_health_text,(10,10))
-
+    screen.blit(yellow_spaceship,(yellow.x,yellow.y))
+    screen.blit(red_spaceship,(red.x,red.y))
     for bullet in red_bullets:
         pygame.draw.rect(screen,RED,bullet)
 
@@ -55,23 +56,23 @@ def draw_window(red,yellow,red_bullets,yellow_bullets,red_hp,yellow_hp):
 
 #Control yellow ship
 def yellow_handle_movement(key_pressed,yellow):
-    if key_pressed(pygame.K_a) and yellow.x > 0:
+    if key_pressed[pygame.K_a] and yellow.x > 0:
         yellow.x -= vel
-    if key_pressed(pygame.K_d) and yellow.x+yellow.width < border.x:
+    if key_pressed[pygame.K_d] and yellow.x+yellow.width < border.x:
         yellow.x += vel
-    if key_pressed(pygame.K_w) and yellow.y > 0:
+    if key_pressed[pygame.K_w] and yellow.y > 0:
         yellow.y -= vel
-    if key_pressed(pygame.K_s) and yellow.y+yellow.height < 500-15:
+    if key_pressed[pygame.K_s] and yellow.y+yellow.height < 500-15:
         yellow.y += vel
 
 def red_handle_movement(key_pressed,red):
-    if key_pressed(pygame.K_LEFT) and red.x > border.x+border.width:
+    if key_pressed[pygame.K_LEFT] and red.x > border.x+border.width:
         red.x -= vel
-    if key_pressed(pygame.K_RIGHT) and red.x+red.width < 800:
+    if key_pressed[pygame.K_RIGHT] and red.x+red.width < 800:
         red.x += vel
-    if key_pressed(pygame.K_UP) and red.y > 0:
+    if key_pressed[pygame.K_UP] and red.y > 0:
         red.y -= vel
-    if key_pressed(pygame.K_DOWN) and red.y+red.height < 500-15:
+    if key_pressed[pygame.K_DOWN] and red.y+red.height < 500-15:
         red.y += vel
 
 def handle_bullets(yellow_bullets,red_bullets,yellow,red):
@@ -94,10 +95,10 @@ def handle_bullets(yellow_bullets,red_bullets,yellow,red):
 
 def draw_winner(text):
     draw_text = winner_font.render(text,1,WHITE)
-    screen.blit(draw_text,(WIDTH/2-draw_text.getwidth()/2,
-                           HEIGHT/2-draw_text.getheight()/2))
+    screen.blit(draw_text,(WIDTH/2-draw_text.get_width()/2,
+                           HEIGHT/2-draw_text.get_height()/2))
     pygame.display.update()
-    pygame.time.display(5000)
+    pygame.time.delay(5000)
 
 def main():
     red = pygame.Rect(600,100,spaceship_width,spaceship_height)
@@ -114,16 +115,16 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
             if event.type == pygame.KEYDOWN:
-                if event.type == pygame.K_LCTRL and len(yellow_bullets) < max_bullets:
+                if event.key == pygame.K_LCTRL and len(yellow_bullets) < max_bullets:
                     bullet = pygame.Rect(yellow.x+yellow.width,
                                          yellow.y+yellow.height//2-2,
                                          20,15)
                     yellow_bullets.append(bullet)
                     pew.play()
                 
-                if event.type == pygame.K_RCTRL and len(red_bullets)<max_bullets:
+                if event.key == pygame.K_RCTRL and len(red_bullets)<max_bullets:
                     bullet=pygame.Rect(red.x,
-                                       red.y+red.height/2-2,15,15)
+                                       red.y+red.height//2-2,15,15)
                     red_bullets.append(bullet)
                     pew.play()
             
@@ -146,6 +147,8 @@ def main():
         keys_pressed = pygame.key.get_pressed()
         yellow_handle_movement(keys_pressed,yellow)
         red_handle_movement(keys_pressed,red)
+
+        handle_bullets(yellow_bullets,red_bullets,yellow,red)
 
         draw_window(red,yellow,red_bullets,yellow_bullets,red_hp,yellow_hp)
     main()
