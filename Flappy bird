@@ -76,7 +76,7 @@ class Bird(pygame.sprite.Sprite):
 #Showing pipes and checking for collision
 class Pipe(pygame.sprite.Sprite):
     def __init__(self,x,y,pos):
-        pygame.sprit.Sprit.__init__(self)
+        pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("flappy bird\image\pipe.png")
         if pos == 1: #top pipe
             self.image = pygame.transform.flip(self.image,False,True)
@@ -149,7 +149,7 @@ while running:
         score += 1
         passed_pipe = False
     #collision detection
-    if pygame.sprite.groupcollide(bird_group,pipe_group,False) \
+    if pygame.sprite.groupcollide(bird_group,pipe_group,False,False) \
         or (flappy.rect.top < 0 ) or flappy.rect.bottom >= 480:
         game_over = True
         flying = False
