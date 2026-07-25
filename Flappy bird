@@ -1,0 +1,98 @@
+import pygame
+pygame.init()
+import random as ran
+WIDTH = 800
+HEIGHT= 500
+screen = pygame.display.set_mode((WIDTH,HEIGHT))
+title = pygame.display.set_caption("Flappy bird")
+screen.fill((255,255,255))
+pygame.display.update()
+font = pygame.font.SysFont("Arial",30)
+FPS = 60
+
+
+bg = pygame.image.load("flappy bird\image\\bg.png")
+ground = pygame.image.load("flappy bird\image\ground.png")
+restart = pygame.image.load("flappy bird\image\\restart.png")
+
+ground_scroll = 0
+scroll_speed = 10
+flying = False
+game_over = False
+pipe_gap = 150
+pipe_freq = 2000
+last_pipe = pygame.time.get_ticks()-pipe_freq
+score = 0
+passed_pipe = False
+
+
+def draw_test(text,font,color,x,y):
+    screen.blit(font.render(text,True,"Black"),(x,y))
+    
+
+def reset_game():
+    pipe_group.empty()
+    flappy.rect.center(100,HEIGHT/2)
+    global score
+    global passed_pipe
+    score = 0
+    passed_pipe = False
+    return score
+
+class Bird(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.images = [pygame.image.load("flappy bird\image\\bird[i].png")for i in range(1,4)]
+        self.index = 0
+        self.counter = 0
+        self.image = self.images[self.index]
+        self.rect - self.image.get_rect(center = (x,y))
+        self.velocity = 0
+        self.clicked = False
+
+    def update(self):
+        if flying:
+            self.velocity = min(self.velocity+0.5,8)
+            self.rect.y += int(self.velocity)
+        if not game_over:
+            if pygame.mouse.get_pressed()[0] and not self.clicked:
+                self.clicked = True
+                self.velocity = -10
+        
+            if not pygame.mouse.get_pressed()[0]:
+                self.clicked = False
+        
+            self.counter += 1
+            if self.counter > 5:
+                self.counter = 0
+                self.index = (self.index + 1)%len(self.images)
+        
+            self.image = pygame.transform.rotate(self.images[self.index],self.velocity * -2)
+
+        else:
+            self.image = pygame.transform.rotate(self.images[self.index],-90)
+
+#Showing pipes and checking for collision
+
+
+
+
+
+
+
+
+
+
+
+
+bird_group = pygame.sprite.Group()
+pipe_group = pygame.sprite.Group()
+
+#Creating objects
+
+flappy = Bird(100,HEIGHT/2)
+bird_group.add(flappy)
+restart_button = Button(WIDTH//2-50,HEIGHT//2-100,restart)
+
+clock = pygame.time.Clock()
+running = True
