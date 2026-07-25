@@ -26,7 +26,7 @@ score = 0
 passed_pipe = False
 
 
-def draw_test(text,font,color,x,y):
+def draw_text(text,font,color,x,y):
     screen.blit(font.render(text,True,"Black"),(x,y))
     
 
