@@ -42,11 +42,12 @@ def reset_game():
 class Bird(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.images = [pygame.image.load("flappy bird\image\\bird[i].png")for i in range(1,4)]
+        self.images = [pygame.image.load(f"flappy bird\image\\bird{i}.png")
+                       for i in range(1,4)]
         self.index = 0
         self.counter = 0
         self.image = self.images[self.index]
-        self.rect - self.image.get_rect(center = (x,y))
+        self.rect = self.image.get_rect(center = (x,y))
         self.velocity = 0
         self.clicked = False
 
@@ -73,16 +74,35 @@ class Bird(pygame.sprite.Sprite):
             self.image = pygame.transform.rotate(self.images[self.index],-90)
 
 #Showing pipes and checking for collision
+class Pipe(pygame.sprite.Sprite):
+    def __init__(self,x,y,pos):
+        pygame.sprit.Sprit.__init__(self)
+        self.image = pygame.image.load("flappy bird\image\pipe.png")
+        if pos == 1: #top pipe
+            self.image = pygame.transform.flip(self.image,False,True)
+            self.rect = self.image.get_rect(bottomleft = 
+                                            (x,y-pipe_gap//2))
+        else: #bottom pipe
+            self.rect = self.image.get_rect(topleft =
+                                            (x,y+pipe_gap//2))
+
+    def update(self):
+        self.rect.x -= scroll_speed
+        if self.rect.right < 0:
+            self.kill()
 
 
-
-
-
-
-
-
-
-
+class Button():
+    def __init__(self,x,y,image):
+        self.image = image
+        self.rect = self.image.get_rect(topleft = (x,y))
+    
+    def draw(self):
+        pos = pygame.mouse.get_pos()
+        if self.rect.collidepoint(pos) and pygame.mouse.get_pressed()[0]:
+            return True
+        screen.blit(self.image,self.rect)
+        return False
 
 
 bird_group = pygame.sprite.Group()
@@ -96,3 +116,62 @@ restart_button = Button(WIDTH//2-50,HEIGHT//2-100,restart)
 
 clock = pygame.time.Clock()
 running = True
+while running:
+    clock.tick(FPS)
+    screen.blit(bg,(0,0))
+    if not game_over and flying:
+        time_now = pygame.time.get_ticks()
+        if time_now - last_pipe > pipe_freq:
+            pipe_height = ran.randint(-100,100)
+            Pipe(WIDTH,HEIGHT//2+pipe_height,-1).add(pipe_group) #bottom pipe
+            Pipe(WIDTH,HEIGHT//2+pipe_height,1).add(pipe_group) #top pipe
+
+        ground_scroll = (ground_scroll-scroll_speed)%35
+        pipe_group.update()
+
+    screen.blit(ground,(ground_scroll,550))
+
+    bird_group.update()
+    bird_group.draw(screen)
+    pipe_group.draw(screen)
+    draw_text(str(score),font,(0,0,0),WIDTH/2,50)
+
+    if (pipe_group) \
+        and (flappy.rect.right < pipe_group.sprites()[0].rect.right)\
+        and (flappy.rect.left > pipe_group.sprites()[0].rect.left)\
+        and (not passed_pipe):
+
+
+        passed_pipe = True
+
+    if (passed_pipe and pipe_group) \
+        and (flappy.rect.left > pipe_group.sprites()[0].rect.right):
+        score += 1
+        passed_pipe = False
+    #collision detection
+    if pygame.sprite.groupcollide(bird_group,pipe_group,False) \
+        or (flappy.rect.top < 0 ) or flappy.rect.bottom >= 480:
+        game_over = True
+        flying = False
+        
+    
+
+
+
+
+
+
+
+
+
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+
+        if event.type == pygame.MOUSEBUTTONDOWN and not flying and not game_over:
+            flying = True
+    
+    pygame.display.update()
+
+pygame.quit()
