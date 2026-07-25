@@ -153,17 +153,11 @@ while running:
         or (flappy.rect.top < 0 ) or flappy.rect.bottom >= 480:
         game_over = True
         flying = False
-        
-    
 
-
-
-
-
-
-
-
-
+    if game_over:
+        if restart_button.draw():
+            reset_game()
+            game_over = False
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
