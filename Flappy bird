@@ -32,7 +32,7 @@ def draw_text(text,font,color,x,y):
 
 def reset_game():
     pipe_group.empty()
-    flappy.rect.center(100,HEIGHT/2)
+    flappy.rect.center=(100,HEIGHT/2)
     global score
     global passed_pipe
     score = 0
@@ -125,11 +125,11 @@ while running:
             pipe_height = ran.randint(-100,100)
             Pipe(WIDTH,HEIGHT//2+pipe_height,-1).add(pipe_group) #bottom pipe
             Pipe(WIDTH,HEIGHT//2+pipe_height,1).add(pipe_group) #top pipe
-
+            last_pipe = time_now
         ground_scroll = (ground_scroll-scroll_speed)%35
         pipe_group.update()
 
-    screen.blit(ground,(ground_scroll,550))
+    screen.blit(ground,(ground_scroll,450))
 
     bird_group.update()
     bird_group.draw(screen)
