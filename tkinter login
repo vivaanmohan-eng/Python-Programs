@@ -1,0 +1,27 @@
+from tkinter import *
+root = Tk()
+root.title("Login page")
+root.geometry("500x500")
+root.config(background = "Red")
+
+#Label and Entry
+
+user = Label(root,text = "Username", bg = "Black", fg="White")
+user.place(x=10,y=150)
+user_input = Entry(root,width = 50)
+user_input.place(x = 125,y = 150)
+
+
+password = Label(root,text = "Password", bg = "Black", fg = "White")
+password.place(x=10,y=350)
+password_input = Entry(root,width = 50,show = "*")
+password_input.place(x = 125,y=350)
+
+confirm_btn = Button(root,text = "Confirm",bd = 7,
+                      background = "Black", activebackground="Blue",
+                      foreground = "Pink", activeforeground="Red",
+                      command = root.destroy)
+confirm_btn.place(x=10,y=450)
+
+
+root.mainloop()
