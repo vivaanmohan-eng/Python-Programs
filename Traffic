@@ -1,0 +1,16 @@
+from tkinter import *
+
+a = Tk()
+a.title("Traffic Light")
+a.geometry("300x300")
+
+b = Button(a, text="STOP", bg="red")
+b.pack(side=TOP)
+
+c = Button(a, text="GO", bg="green")
+c.pack(side=BOTTOM)
+
+d = Button(a, text="WAIT", bg="yellow")
+d.pack(side=LEFT)
+
+a.mainloop()
