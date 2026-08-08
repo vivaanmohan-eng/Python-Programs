@@ -1,0 +1,29 @@
+from tkinter import *
+from tkinter.ttk import *
+root = Tk()
+root.title("Progress Bar")
+root.geometry("300x300")
+
+progress = Progressbar(root,orient = HORIZONTAL, length = 100,
+                       mode = "determinate")
+def bar():
+    import time
+    for i in range(5):
+
+        progress["value"] += 20
+        root.update_idletasks()
+        time.sleep(1)
+
+progress.pack(pady = 50)
+
+btn = Button(root,text = "Start",  command = bar)
+btn.pack(side = LEFT)
+
+#add spin box
+box = Spinbox(root,from_=0,to=10,increment=0.5,format="%00.3f")
+box.pack(side=BOTTOM)
+
+
+
+
+root.mainloop()
