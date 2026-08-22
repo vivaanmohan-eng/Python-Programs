@@ -1,0 +1,36 @@
+from tkinter import *
+import calendar
+def show_cal():
+    new_root = Tk()
+    new_root.geometry("600x600")
+    new_root.config(background="white")
+    fetch_year = int(year_field.get())
+    cal_content = calendar.calendar(fetch_year)
+    cal_year = Label(new_root,text=cal_content,
+                     font="Consolas 10 bold")
+    cal_year.place(x=10,y=10)
+    new_root.mainloop()
+
+
+if __name__ == "__main__":
+    root = Tk()
+    root.geometry("300x300")
+    root.title("Calendar")
+
+    calendar_lbl = Label(root,text = "Calendar" , background="Green")
+    year_field = Entry(root,width = 50)
+    calendar_btn = Button(root,text = "Show Calendar", background="Red",
+                bd = 10,command=show_cal)
+    exit_btn = Button(root,text = "Exit",background="Red",
+                    bd = 10,command=exit)
+
+    calendar_lbl.place(x=50,y=0)
+    year_field.place(x=50,y=50)
+    calendar_btn.place(x=50,y=100)
+    exit_btn.place(x=50,y=150)
+
+
+
+
+
+    root.mainloop()
