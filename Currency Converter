@@ -1,0 +1,53 @@
+from tkinter import *
+
+root = Tk()
+root.geometry("600x400")
+root.title("Currency Converter")
+
+def from_dollar():
+    pound = float(input_value.get())*0.73
+    eur=float(input_value.get())*0.86
+    peso=float(input_value.get())*16.92
+
+    pnd_txt.delete("1.0",END)
+    pnd_txt.insert(END,pound)
+
+    eur_txt.delete("1.0",END)
+    eur_txt.insert(END,eur)
+
+    peso_txt.delete("1.0",END)
+    peso_txt.insert(END,peso)
+
+
+
+convert_btn = Button(root,text="Convert",background="purple"
+                     ,command=from_dollar)
+dollar_lbl = Label(root,text="Dollar",background="red")
+input_value = IntVar()
+
+eur_lbl = Label(root,text="Euro",background="red")
+peso_lbl = Label(root,text="Peso",background="red")
+pnd_lbl = Label(root,text="Pound",background="red")
+dollar_val = Entry(root,textvariable=input_value,
+                   width = 25)
+
+eur_txt = Text(root,height=2,width=10)
+peso_txt = Text(root,height=2,width=10)
+pnd_txt = Text(root,height=2,width=10)
+
+
+convert_btn.place(x=400,y=100)
+dollar_lbl.place(x=150, y=50)
+dollar_val.place(x=150,y=100)
+eur_lbl.place(x=150,y=250)
+pnd_lbl.place(x=300,y=250)
+peso_lbl.place(x=450,y=250)
+eur_txt.place(x=150,y=300)
+pnd_txt.place(x=300,y=300)
+peso_txt.place(x=450,y=300)
+
+
+
+
+
+root.mainloop()
