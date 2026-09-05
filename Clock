@@ -1,0 +1,28 @@
+from tkinter import *
+from time import strftime
+from tkinter.ttk import *
+import random as ran
+
+
+root = Tk()
+root.geometry("700x100")
+root.title("Clock")
+
+def time():
+    string = strftime("%H:%M:%S  %p %b %a")
+    lbl.config(text = string)
+    #updating time after every 1000ms
+    lbl.after(1000,time)
+
+lbl = Label(root,font=("calibri",60,"bold"),background = "blue",
+            foreground=  "black")
+lbl.pack(anchor = "center")
+time()
+
+
+
+
+
+
+
+root.mainloop()
