@@ -1,0 +1,57 @@
+from tkinter import *
+import math
+import tkinter.messagebox
+import random as ran
+
+
+root = Tk()
+root.minsize(400,400)
+root.config(background="Red")
+number = ran.randint(0,20)
+
+
+def check_num():
+    guess = int(guess_box.get())
+    if guess > number:
+        tkinter.messagebox.showinfo("Higher","Your guess is too high")
+    elif guess < number:
+        tkinter.messagebox.showinfo("Lower","Your guess is too low")
+    elif guess == number:
+        tkinter.messagebox.showinfo("Correct","Congratulations, thats right!")
+
+
+def btn_confirm():
+    pass
+
+
+
+
+
+
+welcomelabel = Label(root,text = "Welcome to the guessing game!")
+welcomelabel.pack(side = "top")
+
+username = Label(root,text = "Whats your name?")
+username.place(x=50,y=100)
+
+text_name = Entry(root)
+text_name.place(x = 175,y=100)
+
+ok_btn = Button(root,text = "OK",command = None,bd = 2)
+ok_btn.place(x=50,y=150)
+
+label_guess = Label(root,text = "Take a guess!")
+label_guess.place(x=50,y=200)
+
+check_button = Button(root,text = "Check", command = None,bd = 2)
+check_button.place(x=175,y=200)
+
+guess_box = Entry(root)
+guess_box.place(x=50,y = 225)
+
+
+
+
+
+
+root.mainloop()
