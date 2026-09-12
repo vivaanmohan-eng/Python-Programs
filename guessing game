@@ -21,7 +21,9 @@ def check_num():
 
 
 def btn_confirm():
-    pass
+    myname = text_name.get()
+    tkinter.messagebox.showinfo("Welcome!",
+                                f"Hi {myname}, I am thinking of a number between 1 and 20!")
 
 
 
@@ -37,13 +39,13 @@ username.place(x=50,y=100)
 text_name = Entry(root)
 text_name.place(x = 175,y=100)
 
-ok_btn = Button(root,text = "OK",command = None,bd = 2)
+ok_btn = Button(root,text = "OK",command = btn_confirm,bd = 2)
 ok_btn.place(x=50,y=150)
 
 label_guess = Label(root,text = "Take a guess!")
 label_guess.place(x=50,y=200)
 
-check_button = Button(root,text = "Check", command = None,bd = 2)
+check_button = Button(root,text = "Check", command = check_num,bd = 2)
 check_button.place(x=175,y=200)
 
 guess_box = Entry(root)
