@@ -1,0 +1,50 @@
+from tkinter import *
+import time
+from tkinter import messagebox
+root = Tk()
+root.geometry("375x200")
+root.title("Timer")
+root.config(bg = "Blue")
+
+hour = StringVar()
+min = StringVar()
+sec = StringVar()
+hour.set("00")
+min.set("00")
+sec.set("00")
+
+def submit():
+    try:
+        temp=int(hourbox.get())*3600 + int(minbox.get())*60 + int(secbox.get())
+    except:
+        print("Please enter a valid input.")
+
+    while temp>=0:
+        #first num gets / by 60 second num gets % by 60
+        mins,secs = divmod(temp,60)
+        hours = 00
+        if mins>60:
+            hours,mins = divmod(mins,60)
+        hour.set(f"{hours:02d}")
+        min.set(f"{mins:02d}")
+        sec.set(f"{secs:02d}")
+        root.update()
+        time.sleep(1)
+        if temp == 0:
+            messagebox.showinfo("Timer","Time's up!")
+        temp-=1
+
+
+hourbox = Entry(root,width = 3,font = ("Arial",20,"bold"),textvariable=hour)
+hourbox.place(x="50",y="50")
+minbox = Entry(root,width = 3,font = ("Arial",20,"bold"),textvariable=min)
+minbox.place(x="150",y="50")
+secbox = Entry(root,width = 3,font = ("Arial",20,"bold"),textvariable=sec)
+secbox.place(x="250",y="50")
+
+btn = Button(root,text = "Start timer",bd = 5,bg= "White",fg = "Black", command = submit)
+btn.place(x="50",y="100")
+
+
+
+root.mainloop()
