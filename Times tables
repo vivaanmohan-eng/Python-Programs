@@ -1,0 +1,49 @@
+from tkinter import *
+import tkinter
+from tkinter.ttk import*
+root = Tk()
+root.title("Times tables")
+root.geometry('500x1000')
+root.config(bg='blue')
+
+def gentable():
+    tables = ''
+    for i in range(1,endVal.get()+1):
+        tables+=str(theNum.get())+' x ' + str(i) + ' = ' + str(theNum.get()*i)+'\n'
+
+    table.configure(text = tables)
+
+title = Label(root,text = 'Times Tables',background = 'white',
+              foreground = 'blue', font = ('Arial',16,'bold'))
+caption = Label(root,text = 'Number and Range', background = 'white',
+                 foreground = 'blue', font = ('Arial',16,'bold'))
+title.place(x=200,y=50,)
+caption.place(x=25,y=100)
+#Combo box creation
+
+theNum = IntVar()
+numbers = Combobox(root,textvariable= theNum,width = '4')
+numbers.place(x= 250,y =100)
+numbers['values'] = tuple(range(51))
+#radio buttons
+endVal = IntVar()
+r10 = Radiobutton(root,text='10',variable = endVal,value = 10)
+r20 = Radiobutton(root,text='20',variable = endVal,value = 20)
+r30 = Radiobutton(root,text='30',variable = endVal,value = 30)
+r40 = Radiobutton(root,text='40',variable = endVal,value = 40)
+r50 = Radiobutton(root,text='50',variable = endVal,value = 50)
+endVal.set(10)
+r10.place(x=400,y=100)
+r20.place(x=400,y=125)
+r30.place(x=400,y=150)
+r40.place(x=400,y=175)
+r50.place(x=400,y=200)
+
+genbutton = Button(root,text = 'Generate table',
+                     command = gentable)
+table = Label(root,anchor = 'center')
+
+genbutton.place(x = 50, y = 200)
+table.place(x =  150, y = 200)
+
+root.mainloop()
