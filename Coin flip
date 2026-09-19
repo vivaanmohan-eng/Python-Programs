@@ -1,0 +1,22 @@
+import tkinter as tk
+import random
+
+def flip_coin():
+    options = ["Heads", "Tails"]
+    winner = random.choice(options)
+    result.config(text="It's " + winner + "!")
+
+window = tk.Tk()
+window.title("Coin Toss")
+window.geometry("400x250")
+
+title = tk.Label(window, text="Heads or Tails?", font=("Arial", 20))
+title.place(x=100, y=40)
+
+button = tk.Button(window, text="Flip Coin", font=("Arial", 14), command=flip_coin)
+button.place(x=145, y=100)
+
+result = tk.Label(window, text="", font=("Arial", 18))
+result.place(x=130, y=160)
+
+window.mainloop()
